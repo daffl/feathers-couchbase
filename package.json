@@ -1,0 +1,69 @@
+{
+  "name": "feathers-couchbase",
+  "description": "A modern Couchbase adapter for Feathers",
+  "version": "2.0.0",
+  "homepage": "https://github.com/daffl/feathers-couchbase",
+  "main": "lib/index",
+  "types": "types",
+  "keywords": [
+    "feathers",
+    "feathers-plugin"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/daffl/feathers-couchbase.git"
+  },
+  "author": {
+    "name": "Feathers contributors",
+    "email": "hello@feathersjs.com",
+    "url": "https://feathersjs.com"
+  },
+  "contributors": [],
+  "bugs": {
+    "url": "https://github.com/daffl/feathers-couchbase/issues"
+  },
+  "engines": {
+    "node": ">= 12"
+  },
+  "scripts": {
+    "publish": "git push origin --tags && npm run changelog && git push origin",
+    "changelog": "github_changelog_generator && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
+    "release:patch": "npm run add-dist && npm version patch && npm publish",
+    "release:minor": "npm run add-dist && npm version minor && npm publish",
+    "release:major": "npm run add-dist && npm version major && npm publish",
+    "lint": "semistandard --fix",
+    "mocha": "mocha --exit --recursive test/",
+    "coverage": "nyc --reporter=html --reporter=text npm run mocha",
+    "dtslint": "dtslint types",
+    "test": "npm run dtslint && npm run lint && npm run coverage"
+  },
+  "semistandard": {
+    "env": [
+      "mocha"
+    ]
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "@feathersjs/adapter-commons": "^4.5.2",
+    "@feathersjs/commons": "^4.5.8",
+    "@feathersjs/errors": "^4.5.8",
+    "couchbase": "^3.0.5",
+    "sift": "^13.3.0"
+  },
+  "devDependencies": {
+    "@feathersjs/adapter-tests": "^4.5.2",
+    "@feathersjs/express": "^4.5.8",
+    "@feathersjs/feathers": "^4.5.8",
+    "@feathersjs/socketio": "^4.5.8",
+    "@types/node": "^14.6.0",
+    "dtslint": "^3.7.0",
+    "mocha": "^8.1.2",
+    "nyc": "^15.1.0",
+    "semistandard": "^14.2.3",
+    "shortid": "^2.2.15",
+    "shx": "^0.3.2"
+  }
+}
