@@ -36,7 +36,7 @@
     "mocha": "mocha --exit --recursive test/",
     "coverage": "nyc --reporter=html --reporter=text npm run mocha",
     "dtslint": "dtslint types",
-    "test": "npm run dtslint && npm run lint && npm run coverage"
+    "test": "npm run lint && npm run coverage"
   },
   "semistandard": {
     "env": [
@@ -50,8 +50,7 @@
     "@feathersjs/adapter-commons": "^4.5.2",
     "@feathersjs/commons": "^4.5.8",
     "@feathersjs/errors": "^4.5.8",
-    "couchbase": "^3.0.5",
-    "sift": "^13.3.0"
+    "couchbase": "^3.0.5"
   },
   "devDependencies": {
     "@feathersjs/adapter-tests": "^4.5.2",

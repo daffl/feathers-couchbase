@@ -1,23 +1,15 @@
 // TypeScript Version: 3.0
 import { Params, Paginated, Id, NullableId } from '@feathersjs/feathers';
 import { AdapterService, ServiceOptions, InternalServiceMethods } from '@feathersjs/adapter-commons';
+import { Cluster } from 'couchbase';
 
-export interface MemoryServiceStore {
-  [key: number]: any;
-}
-
-export interface MemoryServiceOptions extends ServiceOptions {
-  store: MemoryServiceStore;
-  startId: number;
-  matcher?: (query: any) => any;
-  sorter?: (sort: any) => any;
+export interface CouchbaseServiceOptions extends ServiceOptions {
+  name: string;
+  cluster: Cluster;
 }
 
 export class Service<T = any> extends AdapterService<T> implements InternalServiceMethods<T> {
-  options: MemoryServiceOptions;
-  store: MemoryServiceStore;
-
-  constructor(config?: Partial<MemoryServiceOptions>);
+  constructor(config?: Partial<CouchbaseServiceOptions>);
 
   _find(params?: Params): Promise<T | T[] | Paginated<T>>;
   _get(id: Id, params?: Params): Promise<T>;
@@ -27,5 +19,5 @@ export class Service<T = any> extends AdapterService<T> implements InternalServi
   _remove(id: NullableId, params?: Params): Promise<T>;
 }
 
-declare const init: ((config?: Partial<MemoryServiceOptions>) => Service);
+declare const init: ((config?: Partial<CouchbaseServiceOptions>) => Service);
 export default init;
