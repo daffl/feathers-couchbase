@@ -13,7 +13,7 @@ $ npm install --save feathers-couchbase
 
 ## Supported by
 
-[![Fortify logo](https://user-images.githubusercontent.com/338316/99840845-2421a800-2b22-11eb-9ddd-0029c4dece26.jpg)](https://fortify.pro/)
+[![fortify-logo](https://user-images.githubusercontent.com/338316/99841179-9befd280-2b22-11eb-932e-b8ff850fe44c.png)](https://fortify.pro/)
 
 ## API
 
