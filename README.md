@@ -1,12 +1,9 @@
 # feathers-couchbase
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/daffl/feathers-couchbase.svg)](https://greenkeeper.io/)
-
-[![Build Status](https://travis-ci.org/daffl/feathers-couchbase.png?branch=master)](https://travis-ci.org/daffl/feathers-couchbase)
 [![Dependency Status](https://img.shields.io/david/daffl/feathers-couchbase.svg?style=flat-square)](https://david-dm.org/daffl/feathers-couchbase)
 [![Download Status](https://img.shields.io/npm/dm/feathers-couchbase.svg?style=flat-square)](https://www.npmjs.com/package/feathers-couchbase)
 
-A [Feathers](https://feathersjs.com) service adapter for in-memory data storage that works on all platforms.
+A [Feathers](https://feathersjs.com) service adapter for Couchbase.
 
 ```bash
 $ npm install --save feathers-couchbase
@@ -31,9 +28,9 @@ app.use('/messages', service({ id, startId, store, events, paginate }));
 __Options:__
 
 - `id` (*optional*, default: `'id'`) - The name of the id field property.
-- `startId` (*optional*, default: `0`) - An id number to start with that will be incremented for every new record (unless it is already set).
-- `store` (*optional*) - An object with id to item assignments to pre-initialize the data store
 - `events` (*optional*) - A list of [custom service events](https://docs.feathersjs.com/api/events.html#custom-events) sent by this service
+- `name` - The name of the bucket (must be created in Couchbase admin)
+- `cluster` - The couchbase cluster instance
 - `paginate` (*optional*) - A [pagination object](https://docs.feathersjs.com/api/databases/common.html#pagination) containing a `default` and `max` page size
 - `whitelist` (*optional*) - A list of additional query parameters to allow
 - `multi` (*optional*) - Allow `create` with arrays and `update` and `remove` with `id` `null` to change multiple items. Can be `true` for all methods or an array of allowed methods (e.g. `[ 'remove', 'create' ]`)
@@ -43,7 +40,7 @@ __Options:__
 Here is an example of a Feathers server with a `messages` in-memory service that supports pagination:
 
 ```
-$ npm install @feathersjs/feathers @feathersjs/express @feathersjs/socketio @feathersjs/errors feathers-couchbase
+$ npm install @feathersjs/feathers @feathersjs/express couchbase feathers-couchbase
 ```
 
 In `app.js`:
@@ -51,48 +48,45 @@ In `app.js`:
 ```js
 const feathers = require('@feathersjs/feathers');
 const express = require('@feathersjs/express');
-const socketio = require('@feathersjs/socketio');
 
-const memory = require('feathers-couchbase');
+const couchbase = require('couchbase');
+const cluster = new couchbase.Cluster('couchbase://localhost', {
+  username: 'Administrator',
+  password: 'test123'
+});
 
-// Create an Express compatible Feathers application instance.
+const { CouchbaseService } = require('feathers-couchbase');
+
+// Creates an ExpressJS compatible Feathers application
 const app = express(feathers());
-// Turn on JSON parser for REST services
+
+// Parse HTTP JSON bodies
 app.use(express.json());
-// Turn on URL-encoded parser for REST services
+// Parse URL-encoded params
 app.use(express.urlencoded({ extended: true }));
-// Enable REST services
+// Host static files from the current folder
+app.use(express.static(__dirname));
+// Add REST API support
 app.configure(express.rest());
-// Enable REST services
-app.configure(socketio());
-// Create an in-memory Feathers service with a default page size of 2 items
-// and a maximum size of 4
-app.use('/messages', memory({
+// Register a Couchbase people service
+app.use('/people', new CouchbaseService({
+  cluster,
+  name: 'feathers-test',
   paginate: {
-    default: 2,
-    max: 4
+    default: 10,
+    max: 100
   }
 }));
-// Set up default error handler
+// Register a nicer error handler than the default Express one
 app.use(express.errorHandler());
 
-// Create a dummy Message
-app.service('messages').create({
-  text: 'Message created on server'
-}).then(message => console.log('Created message', message));
-
-// Start the server.
-const port = 3030;
-
-app.listen(port, () => {
-  console.log(`Feathers server listening on port ${port}`)
-});
+app.listen(3030).on('listening', () => console.log('feathers-couchbase example started'));
 ```
 
 Run the example with `node app` and go to [localhost:3030/messages](http://localhost:3030/messages).
 
 ## License
 
-Copyright (c) 2017
+Copyright (c) 2020
 
 Licensed under the [MIT license](LICENSE).

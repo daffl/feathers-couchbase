@@ -8,7 +8,7 @@ export interface CouchbaseServiceOptions extends ServiceOptions {
   cluster: Cluster;
 }
 
-export class Service<T = any> extends AdapterService<T> implements InternalServiceMethods<T> {
+export class CouchbaseService<T = any> extends AdapterService<T> implements InternalServiceMethods<T> {
   constructor(config?: Partial<CouchbaseServiceOptions>);
 
   _find(params?: Params): Promise<T | T[] | Paginated<T>>;
@@ -19,5 +19,5 @@ export class Service<T = any> extends AdapterService<T> implements InternalServi
   _remove(id: NullableId, params?: Params): Promise<T>;
 }
 
-declare const init: ((config?: Partial<CouchbaseServiceOptions>) => Service);
+declare const init: ((config?: Partial<CouchbaseServiceOptions>) => CouchbaseService);
 export default init;
