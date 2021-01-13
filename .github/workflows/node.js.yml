@@ -13,7 +13,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Start Couchbase
-      run: docker run -t --name db -p 8091-8094:8091-8094 -p 11210:11210 couchbase/server-sandbox:6.5.0
+      run: |
+        docker run -t --name db -p 8091-8094:8091-8094 -p 11210:11210 couchbase/server-sandbox:6.5.0 &
+        sleep 60
+        docker exec -it db couchbase-cli bucket-create --username Administrator --password password --bucket feathers-test --bucket-type memcached --bucket-ramsize 100 --cluster localhost
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test

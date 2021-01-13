@@ -73,7 +73,7 @@ const testSuite = adapterTests([
 describe('Feathers Couchbase Service', () => {
   const cluster = new couchbase.Cluster('couchbase://localhost', {
     username: 'Administrator',
-    password: 'test123'
+    password: 'password'
   });
   const app = feathers()
     .use('/people', couchbaseService({
