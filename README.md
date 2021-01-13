@@ -34,6 +34,7 @@ __Options:__
 - `events` (*optional*) - A list of [custom service events](https://docs.feathersjs.com/api/events.html#custom-events) sent by this service
 - `name` - The name of the bucket (must be created in Couchbase admin)
 - `cluster` - The couchbase cluster instance
+- `retries` - The number of times to retry insertion (see https://docs.couchbase.com/nodejs-sdk/current/howtos/error-handling.html)
 - `paginate` (*optional*) - A [pagination object](https://docs.feathersjs.com/api/databases/common.html#pagination) containing a `default` and `max` page size
 - `whitelist` (*optional*) - A list of additional query parameters to allow
 - `multi` (*optional*) - Allow `create` with arrays and `update` and `remove` with `id` `null` to change multiple items. Can be `true` for all methods or an array of allowed methods (e.g. `[ 'remove', 'create' ]`)
