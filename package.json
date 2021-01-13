@@ -46,6 +46,9 @@
   "directories": {
     "lib": "lib"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "shortid": "^2.2.16",
     "couchbase": "^3.0.7",
