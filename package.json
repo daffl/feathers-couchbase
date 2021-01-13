@@ -29,9 +29,9 @@
   "scripts": {
     "publish": "git push origin --tags && npm run changelog && git push origin",
     "changelog": "github_changelog_generator && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
-    "release:patch": "npm run add-dist && npm version patch && npm publish",
-    "release:minor": "npm run add-dist && npm version minor && npm publish",
-    "release:major": "npm run add-dist && npm version major && npm publish",
+    "release:patch": "npm version patch && npm publish",
+    "release:minor": "npm version minor && npm publish",
+    "release:major": "npm version major && npm publish",
     "lint": "semistandard --fix",
     "mocha": "mocha --exit --recursive test/",
     "coverage": "nyc --reporter=html --reporter=text npm run mocha",
