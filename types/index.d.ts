@@ -6,6 +6,7 @@ import { Cluster } from 'couchbase';
 export interface CouchbaseServiceOptions extends ServiceOptions {
   name: string;
   cluster: Cluster;
+  retries?: number;
 }
 
 export class CouchbaseService<T = any> extends AdapterService<T> implements InternalServiceMethods<T> {
