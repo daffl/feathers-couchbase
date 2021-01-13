@@ -33,7 +33,7 @@
     "release:minor": "npm run add-dist && npm version minor && npm publish",
     "release:major": "npm run add-dist && npm version major && npm publish",
     "lint": "semistandard --fix",
-    "mocha": "mocha --exit --recursive test/",
+    "mocha": "mocha --exit --timeout 20000 --recursive test/",
     "coverage": "nyc --reporter=html --reporter=text npm run mocha",
     "dtslint": "dtslint types",
     "test": "npm run lint && npm run coverage"
