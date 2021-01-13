@@ -21,6 +21,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Run CouchbaseFakeIt
       uses: brantburnett/run-couchbasefakeit@v0.1
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       with:
         couchbase-version: enterprise-6.6.0
         couchbase-configuration: example # Folder in your repo with CouchbaseFakeIt configuration
