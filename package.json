@@ -1,7 +1,7 @@
 {
   "name": "@daffl/feathers-couchbase",
   "description": "A modern Couchbase adapter for Feathers",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "homepage": "https://github.com/daffl/feathers-couchbase",
   "main": "lib/index",
   "types": "types",
