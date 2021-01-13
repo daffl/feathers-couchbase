@@ -1,0 +1,39 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 15.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Run CouchbaseFakeIt
+      # You may pin to the exact commit or the version.
+      # uses: brantburnett/run-couchbasefakeit@642ff869eb77c66545b3abccaa570d7f3499e626
+      uses: brantburnett/run-couchbasefakeit@v0.1
+      with:
+        # Docker tag for the version of CouchbaseFakeIt, i.e. "enterprise-6.5.0"
+        couchbase-version: 6.6.0
+        couchbase-username: Administrator
+        couchbase-password: test123
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
