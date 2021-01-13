@@ -20,7 +20,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Run CouchbaseFakeIt
-      uses: btburnett3/run-couchbasefakeit
+      uses: btburnett3/run-couchbasefakeit@v0.1
       with:
         couchbase-version: enterprise-6.6.0
         couchbase-configuration: example # Folder in your repo with CouchbaseFakeIt configuration
