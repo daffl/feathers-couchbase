@@ -84,12 +84,14 @@ describe('Feathers Couchbase Service', () => {
       name: 'feathers-test',
       events: ['testing']
     }));
-    // .use('/people-customid', memory({
-    //   id: 'customid', events
-    // }));
 
   before(async () => {
-    await cluster.query('DELETE from `feathers-test`');
+    try {
+      await cluster.query('CREATE PRIMARY INDEX `feathers-test-index` ON `feathers-test` USING GSI;');
+    } catch (error) {
+      // Index exists, nothing to do here
+    }
+    await cluster.query('DELETE from `feathers-test`;');
   });
 
   it('exports', () => {

@@ -3,7 +3,7 @@ on: [ push, pull_request ]
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
+    strategy: 
       matrix:
         node-version: [12.x, 14.x, 15.x]
     steps:
@@ -14,9 +14,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Start Couchbase
       run: |
-        docker run --name db -p 8091-8094:8091-8094 -p 11210:11210 couchbase/server-sandbox:6.5.0 &
-        sleep 120
-        docker exec -it db couchbase-cli bucket-create --username Administrator --password password --bucket feathers-test --bucket-type memcached --bucket-ramsize 100 --cluster localhost
+        docker run -d --name db -p 8091-8094:8091-8094 -p 11210:11210 couchbase/server-sandbox:6.5.0
+        sleep 100
+        docker exec db couchbase-cli bucket-create --username Administrator --password password --bucket feathers-test --bucket-type couchbase --bucket-ramsize 100 --cluster localhost
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
